@@ -25,5 +25,11 @@ public class EntityDTOConverterServiceImp implements EntityDTOConverterService {
                 .map(member -> modelMapper.map(member, MemberDTO.class))
                 .collect(Collectors.toList());
     }
+    {
+
+    }
+    public MemberDTO convertToDTO(Member member) {
+        return modelMapper.map(member, MemberDTO.class);
+    }
 }
 

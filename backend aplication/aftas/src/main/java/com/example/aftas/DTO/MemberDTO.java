@@ -24,7 +24,6 @@ public class MemberDTO {
     private Long id;
     private String name;
     private String familyName;
-
     @JsonProperty("accession_date")
     private Date accessionDate;
     private String nationality;

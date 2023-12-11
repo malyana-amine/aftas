@@ -11,4 +11,5 @@ import java.util.List;
 @Service
 public interface EntityDTOConverterService {
     List<MemberDTO> convertToDTO(List<Member> member);
+    public MemberDTO convertToDTO(Member member);
 }

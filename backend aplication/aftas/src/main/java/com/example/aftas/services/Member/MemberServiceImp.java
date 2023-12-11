@@ -28,8 +28,8 @@ public class MemberServiceImp implements MemberService{
     }
 
     @Override
-    public Member save(Member entityDTO) {
-        return null;
+    public Member save(Member member) {
+        return memberRepository.save(member);
     }
 
     @Override

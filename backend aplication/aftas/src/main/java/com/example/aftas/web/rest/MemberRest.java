@@ -30,5 +30,14 @@ public class MemberRest {
         List<MemberDTO> memberDTOs = converterService.convertToDTO(members);
         return new ResponseEntity<>(memberDTOs, HttpStatus.OK);
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<MemberDTO> saveMember(@RequestBody Member member1){
+        Member member = memberService.save(member1);
+        MemberDTO memberDTO = converterService.convertToDTO(member);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+    }
+
+
 }
 
