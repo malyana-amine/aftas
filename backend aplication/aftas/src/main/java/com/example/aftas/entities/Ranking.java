@@ -14,19 +14,20 @@ import lombok.*;
 @NoArgsConstructor
 public class Ranking {
 
-    @EmbeddedId
-    private MemberCompetition id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Integer rank;
     private Integer score;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
-    @MapsId("memberId")
+//    @MapsId("memberId")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "competition_id")
-    @MapsId("competitionId")
+//    @MapsId("competitionId")
     private Competition competition;
 }
