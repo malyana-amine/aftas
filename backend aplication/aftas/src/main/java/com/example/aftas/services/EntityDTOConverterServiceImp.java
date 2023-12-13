@@ -1,14 +1,8 @@
 package com.example.aftas.services;
 
 
-import com.example.aftas.DTO.CompetitionDTO;
-import com.example.aftas.DTO.HuntingDTO;
-import com.example.aftas.DTO.MemberDTO;
-import com.example.aftas.DTO.RankingDTO;
-import com.example.aftas.entities.Competition;
-import com.example.aftas.entities.Hunting;
-import com.example.aftas.entities.Member;
-import com.example.aftas.entities.Ranking;
+import com.example.aftas.DTO.*;
+import com.example.aftas.entities.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -49,6 +43,11 @@ public class EntityDTOConverterServiceImp implements EntityDTOConverterService {
     @Override
     public HuntingDTO convertToDTO(Hunting hunting) {
         return modelMapper.map(hunting, HuntingDTO.class);
+    }
+
+    @Override
+    public FishDTO convertToDTO(Fish fish) {
+        return modelMapper.map(fish, FishDTO.class);
     }
 }
 

@@ -7,5 +7,5 @@ spring:
     password: 12
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true

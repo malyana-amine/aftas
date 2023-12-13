@@ -37,15 +37,22 @@ public class RegisterCompetitionServiceImpl implements RegisterCompetitionServic
     }
 
     @Override
-    public Ranking saveRegestration(Ranking entityDTO,Long memberId,Long compId) {
-        Optional<Member> member = memberRepository.findById(memberId);
-        Optional<Competition> competition = competitionRepository.findById(compId);
-        entityDTO.setMember(member.get());
-        entityDTO.setCompetition(competition.get());
+    public Ranking saveRegestration(Ranking entityDTO, Long memberId, Long compId) {
+        Member member = memberRepository.getById(memberId);
+        Competition competition = competitionRepository.getById(compId);
 
-        Ranking ranking = rankingRepository.save(entityDTO);
-        return ranking;
+        Ranking existingRegistration = rankingRepository.findByMemberAndCompetition(member, competition);
+        if (existingRegistration != null) {
+            throw new RuntimeException("Member has already registered for this competition");
+        }
+
+        entityDTO.setMember(member);
+        entityDTO.setCompetition(competition);
+
+        return rankingRepository.save(entityDTO);
     }
+
+
 
     @Override
     public Ranking update(Ranking entityDTO) {

@@ -20,8 +20,7 @@ import java.util.List;
 public class Competition {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String code;
 
     private Date date;
     private Time startTime;
