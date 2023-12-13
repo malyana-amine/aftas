@@ -29,6 +29,4 @@ public class MemberDTO {
     private String nationality;
     private IdentityDocumentType identityDocumentType;
     private String identityNumber;
-    private List<Ranking> rankings;
-    private List<Hunting> huntings;
 }

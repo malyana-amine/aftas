@@ -24,6 +24,4 @@ public class CompetitionDTO {
     private Integer numberOfParticipant;
     private String location;
     private Double amount;
-    private List<Hunting> hunting;
-    private List<Ranking> ranks;
 }

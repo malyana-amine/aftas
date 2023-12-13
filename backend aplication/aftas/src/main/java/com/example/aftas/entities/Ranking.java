@@ -2,6 +2,7 @@ package com.example.aftas.entities;
 
 
 import com.example.aftas.entities.embadded.MemberCompetition;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

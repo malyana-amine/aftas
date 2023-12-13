@@ -2,9 +2,11 @@ package com.example.aftas.services;
 
 
 import com.example.aftas.DTO.CompetitionDTO;
+import com.example.aftas.DTO.HuntingDTO;
 import com.example.aftas.DTO.MemberDTO;
 import com.example.aftas.DTO.RankingDTO;
 import com.example.aftas.entities.Competition;
+import com.example.aftas.entities.Hunting;
 import com.example.aftas.entities.Member;
 import com.example.aftas.entities.Ranking;
 import org.modelmapper.ModelMapper;
@@ -43,6 +45,10 @@ public class EntityDTOConverterServiceImp implements EntityDTOConverterService {
     @Override
     public RankingDTO convertToDTO(Ranking ranking) {
         return modelMapper.map(ranking, RankingDTO.class);
+    }
+    @Override
+    public HuntingDTO convertToDTO(Hunting hunting) {
+        return modelMapper.map(hunting, HuntingDTO.class);
     }
 }
 

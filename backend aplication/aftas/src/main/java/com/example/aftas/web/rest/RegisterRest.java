@@ -34,8 +34,6 @@ public class RegisterRest {
         Integer score = requestBody.get("score");
         Long memberId = Long.valueOf(requestBody.get("memberId"));
         Long compId = Long.valueOf(requestBody.get("compId"));
-
-        // Now you have all the required values, you can use them in your service method.
         Ranking ranking = new Ranking();
         ranking.setRank(rank);
         ranking.setScore(score);

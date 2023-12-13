@@ -32,11 +32,9 @@ public class Competition {
 
     @OneToMany(mappedBy = "competition")
     @ToString.Exclude
-    @JsonIgnore
     private List<Hunting> hunting;
 
     @OneToMany(mappedBy = "competition")
     @ToString.Exclude
-    @JsonIgnore
     private List<Ranking> ranks;
 }

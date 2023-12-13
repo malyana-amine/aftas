@@ -1,6 +1,7 @@
 package com.example.aftas.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +16,7 @@ public class Hunting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer numberOfFish;
+    private Integer numberOfFish = 1;
 
     @ManyToOne
     private Fish fish;
