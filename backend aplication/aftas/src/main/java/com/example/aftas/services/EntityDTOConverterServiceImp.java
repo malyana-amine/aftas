@@ -44,7 +44,6 @@ public class EntityDTOConverterServiceImp implements EntityDTOConverterService {
     public HuntingDTO convertToDTO(Hunting hunting) {
         return modelMapper.map(hunting, HuntingDTO.class);
     }
-
     @Override
     public FishDTO convertToDTO(Fish fish) {
         return modelMapper.map(fish, FishDTO.class);

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface HuntingService extends CrudService<Hunting, Long> {
-    Hunting saveHunting(Long membeId, Long mompId, Long fishId);
+    Hunting saveHunting(Long membeId, Long mompId, Long fishId,Double av);
 }

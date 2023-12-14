@@ -35,8 +35,9 @@ public class HuntingRest {
         Long fishId = Long.valueOf(requestBody.get("fishId"));
         Long memberId = Long.valueOf(requestBody.get("memberId"));
         Long compId = Long.valueOf(requestBody.get("compId"));
+        Double actuelWeightOfHuntingFish = Double.valueOf(requestBody.get("actuelWeightOfHuntingFish"));
 
-        Hunting hunting = huntingService.saveHunting(memberId,compId,fishId);
+        Hunting hunting = huntingService.saveHunting(memberId,compId,fishId,actuelWeightOfHuntingFish);
         HuntingDTO huntingDTO = converterService.convertToDTO(hunting);
         return new ResponseEntity<>(huntingDTO, HttpStatus.OK);
     }

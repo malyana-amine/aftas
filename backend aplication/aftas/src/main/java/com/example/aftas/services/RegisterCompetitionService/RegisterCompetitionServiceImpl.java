@@ -8,6 +8,10 @@ import com.example.aftas.repositories.MemberRepository;
 import com.example.aftas.repositories.RankingRepository;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 @Component
@@ -41,6 +45,17 @@ public class RegisterCompetitionServiceImpl implements RegisterCompetitionServic
         Member member = memberRepository.getById(memberId);
         Competition competition = competitionRepository.getById(compId);
 
+        // Check if the competition has less than a day left
+        LocalDateTime now = LocalDateTime.now();
+        Instant instant = competition.getDate().toInstant();
+        LocalDateTime competitionEndTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+                .with(competition.getEndTime().toLocalTime());
+
+        long hoursDifference = ChronoUnit.HOURS.between(now, competitionEndTime);
+        if (hoursDifference < 24) {
+            throw new RuntimeException("Registration is closed for this competition");
+        }
+
         Ranking existingRegistration = rankingRepository.findByMemberAndCompetition(member, competition);
         if (existingRegistration != null) {
             throw new RuntimeException("Member has already registered for this competition");
@@ -51,6 +66,7 @@ public class RegisterCompetitionServiceImpl implements RegisterCompetitionServic
 
         return rankingRepository.save(entityDTO);
     }
+
 
 
 

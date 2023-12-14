@@ -37,12 +37,9 @@ public class RegisterRest {
         Ranking ranking = new Ranking();
         ranking.setRank(rank);
         ranking.setScore(score);
-
         Ranking savedRanking = registerCompetitionService.saveRegestration(ranking, memberId, compId);
-
             RankingDTO rankingDTO = converterService.convertToDTO(savedRanking);
             return new ResponseEntity<>(rankingDTO, HttpStatus.OK);
-
     }
 }
 

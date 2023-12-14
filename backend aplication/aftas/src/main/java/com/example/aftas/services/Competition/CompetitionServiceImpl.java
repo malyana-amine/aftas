@@ -39,10 +39,12 @@ public class CompetitionServiceImpl implements CompetitionService {
             throw new IllegalArgumentException("Another competition already exists on the same date");
         }
 
+        // Generate the competition code
+        competition.generateCode();
+
         // Save the competition if validation passes
         return competitionRepository.save(competition);
     }
-
 
     @Override
     public Competition update(Competition entityDTO) {

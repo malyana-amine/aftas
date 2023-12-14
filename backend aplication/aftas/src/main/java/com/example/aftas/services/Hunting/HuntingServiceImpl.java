@@ -5,6 +5,7 @@ import com.example.aftas.entities.Fish;
 import com.example.aftas.entities.Hunting;
 import com.example.aftas.entities.Member;
 import com.example.aftas.repositories.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -36,17 +37,40 @@ public class HuntingServiceImpl implements HuntingService {
         return null;
     }
     @Override
-    public Hunting saveHunting(Long memberId, Long compId, Long fishId) {
+    public Hunting saveHunting(Long memberId, Long compId, Long fishId, Double actuelWeightOfHuntingFish) {
         Optional<Member> member = memberRepository.findById(memberId);
         Optional<Competition> competition = competitionRepository.findById(compId);
         Optional<Fish> fish = fishRepository.findById(fishId);
-        Hunting hunting = new Hunting();
-        hunting.setCompetition(competition.get());
-        hunting.setFish(fish.get());
-        hunting.setMember(member.get());
 
-        return huntingRepository.save(hunting);
+        if (fish.isPresent()) {
+            Fish fishEntity = fish.get();
+
+            if (actuelWeightOfHuntingFish < fishEntity.getAverageWeight()) {
+                throw new IllegalArgumentException("Actual weight is less than average weight. Hunting record not saved.");
+            }
+
+            Optional<Hunting> existingHunt = huntingRepository.findByMemberAndFish(member.get(), fishEntity);
+
+            if (existingHunt.isPresent()) {
+                Hunting hunting = existingHunt.get();
+                int currentCount = hunting.getNumberOfFish();
+                hunting.setNumberOfFish(currentCount + 1);
+                return huntingRepository.save(hunting);
+            } else {
+                Hunting hunting = new Hunting();
+                hunting.setCompetition(competition.get());
+                hunting.setFish(fishEntity);
+                hunting.setMember(member.get());
+                hunting.setNumberOfFish(1);
+                return huntingRepository.save(hunting);
+            }
+        } else {
+            // Handle the case when the fish entity is not present
+            throw new EntityNotFoundException("Fish with id " + fishId + " not found. Hunting record not saved.");
+        }
     }
+
+
 
     @Override
     public Hunting update(Hunting entityDTO) {
