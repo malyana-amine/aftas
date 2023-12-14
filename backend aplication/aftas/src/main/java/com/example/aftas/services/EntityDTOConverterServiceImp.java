@@ -25,8 +25,11 @@ public class EntityDTOConverterServiceImp implements EntityDTOConverterService {
                 .map(member -> modelMapper.map(member, MemberDTO.class))
                 .collect(Collectors.toList());
     }
-    {
-
+    @Override
+    public List<CompetitionDTO> convertToDTO1(List<Competition> competitions){
+        return competitions.stream()
+                .map(competition -> modelMapper.map(competition, CompetitionDTO.class))
+                .collect(Collectors.toList());
     }
     public MemberDTO convertToDTO(Member member) {
         return modelMapper.map(member, MemberDTO.class);
@@ -36,6 +39,8 @@ public class EntityDTOConverterServiceImp implements EntityDTOConverterService {
     public CompetitionDTO convertToDTO(Competition competition) {
         return modelMapper.map(competition, CompetitionDTO.class);
     }
+
+
     @Override
     public RankingDTO convertToDTO(Ranking ranking) {
         return modelMapper.map(ranking, RankingDTO.class);

@@ -19,7 +19,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
     @Override
     public List<Competition> findAll() {
-        return null;
+        return competitionRepository.findAll();
     }
 
     @Override

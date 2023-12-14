@@ -1,13 +1,11 @@
 package com.example.aftas.DTO;
 
-import com.example.aftas.entities.Hunting;
-import com.example.aftas.entities.Ranking;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.sql.Time;
 import java.util.Date;
-import java.util.List;
+
 
 @Getter
 @Setter
@@ -18,6 +16,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompetitionDTO {
     private Long id;
+    private String code;
     private Date date;
     private Time startTime;
     private Time endTime;

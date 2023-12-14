@@ -11,6 +11,9 @@ import java.util.List;
 @Service
 public interface EntityDTOConverterService {
     List<MemberDTO> convertToDTO(List<Member> member);
+
+    List<CompetitionDTO> convertToDTO1(List<Competition> competitions);
+
     public MemberDTO convertToDTO(Member member);
 
     public CompetitionDTO convertToDTO(Competition competition);
