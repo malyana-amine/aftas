@@ -28,7 +28,7 @@
         <input [(ngModel)]="competition.amount" type="number" class="form-control" id="amount" placeholder="Amount" name="amount" required>
         <label for="amount">Amount</label>
       </div>  
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button (click)="toggleForm()" type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
   

@@ -1,0 +1,28 @@
+<div class="content">
+    <div class="container-fluid pt-4 px-4">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Event Details</h2>
+            <hr>
+            <div class="card-body">
+                <h5 class="card-title text-dark">Event Code: {{ competition?.code }}</h5>
+                <p class="card-text">Date: {{ competition?.date | date:'yyyy-MM-dd'}}</p>
+                <p class="card-text">Start Time: {{ competition?.startTime }}</p>
+                <p class="card-text">End Time: {{ competition?.endTime }} </p>
+                <p class="card-text">Number of Participants: {{ competition?.numberOfParticipant }}</p>
+                <p class="card-text">Location: {{ competition?.location }}</p>
+                <p class="card-text">Amount: ${{ competition?.amount }}</p>
+            
+                <!-- Add update button -->
+                <button class="btn btn-primary" >Update</button>
+            
+                <!-- Add delete button -->
+                <button class="btn btn-danger ">Delete</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+</div>
+</div>
