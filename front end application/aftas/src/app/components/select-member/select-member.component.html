@@ -1,0 +1,6 @@
+<!-- app-select-member.component.html -->
+<select *ngIf="memberData.length > 0" name="selectedMember" class="form-select" aria-label="Default select example" [(ngModel)]="selectedMemberId">
+    <option disabled selected>Select a member</option>
+    <option *ngFor="let member of memberData" [value]="member.id">{{ member.name }}</option>
+  </select>
+  

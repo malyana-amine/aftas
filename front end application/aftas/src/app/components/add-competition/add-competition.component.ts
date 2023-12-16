@@ -16,6 +16,8 @@ export class AddCompetitionComponent {
   isFormVisible = false;
   competition: Competition = new Competition();
   userForm!: NgForm;
+  message!: String;
+  status!: any;
   
   constructor(
     private competitionService: CompetitionService,
@@ -31,14 +33,20 @@ export class AddCompetitionComponent {
     const [hours, minutes] = time.split(':');
     return `${hours}:${minutes}`;
   }
+  public isvisible: boolean = false;
 
-  // redirectToSomeRoute() {
-  //   this.router.navigate(['/kkk']);
-  // }
+  showalert() : void {
+
+    if (this.isvisible && this.status == 200) { 
+      this.isFormVisible = false;
+      return;
+    } 
+    this.isvisible = true;
+    setTimeout(()=> this.isvisible = false,2500); // hide the alert after 2.5s
+  }
 
   register(form: NgForm) {
     if (form.valid) {
-
       this.competition.startTime = this.formatTime(this.competition.startTime)+`:00`;
       this.competition.endTime = this.formatTime(this.competition.endTime)+`:00`;
       // console.log(this.competition.endTime)
@@ -47,16 +55,12 @@ export class AddCompetitionComponent {
         response => {
           console.log('Competition registered successfully', response);
           form.resetForm();
-          // this.redirectToSomeRoute();
-        },
-        error => {
-          console.error('Error registering competition', error);
-          // Log the detailed error message from the server
-          if (error instanceof HttpErrorResponse) {
-            console.error('Server error:', error.error);
-          }
+          this.message = response.message;
+          this.status = response.status;
+          console.log(response.message+'erzrezrzerezze');
         }
       );
+
       
     }
   }

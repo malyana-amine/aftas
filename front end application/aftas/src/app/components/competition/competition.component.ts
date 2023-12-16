@@ -14,7 +14,7 @@ export class CompetitionComponent implements OnInit{
     this.competitionService.getCompetition().subscribe((result: any)=>{
       console.log(result);
       this.competitionData = result;
-      // console.log(result.data);
+      console.log(result.date);
     }
     )
   }

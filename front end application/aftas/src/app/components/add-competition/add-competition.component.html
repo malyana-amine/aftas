@@ -28,7 +28,10 @@
         <input [(ngModel)]="competition.amount" type="number" class="form-control" id="amount" placeholder="Amount" name="amount" required>
         <label for="amount">Amount</label>
       </div>  
-      <button (click)="toggleForm()" type="submit" class="btn btn-primary">Submit</button>
+      <button (click)="showalert()" type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <div [ngClass]="status=='200'?'text-success':'text-danger'"  class="alert" [class.visible]="isvisible"> 
+      {{ message }}
+    </div>
   </div>
   

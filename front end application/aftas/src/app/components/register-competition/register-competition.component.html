@@ -1,0 +1,46 @@
+<div class="content">
+    <div class="container-fluid pt-4 px-4">
+        <div class="container"> 
+            </div>
+      <div class="row g-4">
+          <div class="col-12">
+              <div class="bg-secondary rounded h-100 p-4">
+                  <h6 class="mb-4">Responsive Table</h6>
+                  <div class="table-responsive">
+                    
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th scope="col">Code</th>
+                                  <th scope="col">Location</th>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Start time</th>
+                                  <th scope="col">End time</th>
+                                  <th scope="col">amount</th>
+                                  <th scope="col">Number of participant</th>
+                                  <th scope="col"> Register </th>
+                              </tr>
+                          </thead>
+                          <tbody *ngFor="let competitions of competitionData">
+                              <tr>
+                                  <th scope="row"> <a [routerLink]="['/competition', competitions?.id]">{{ competitions?.code }}</a> </th>
+                                  <td>{{ competitions?.location }}</td>
+                                  <td>{{ competitions?.date |date:'yyyy-MM-dd'}} </td>
+                                  <td>{{ competitions?.startTime }}</td>
+                                  <td>{{ competitions?.endTime }}</td>
+                                  <td>{{ competitions?.amount }}</td>
+                                  <td class="disabled">{{ competitions?.numberOfParticipant }}</td>
+                                  <td>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" [disabled]="!compareDates(competitions?.date)" (click)="selectCompetition(competitions?.id)">Register now</button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <app-register-now></app-register-now>
+    </div>
+    <!-- <h1>dfff</h1> -->
