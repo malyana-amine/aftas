@@ -2,10 +2,13 @@ package com.example.aftas.services.Competition;
 
 import com.example.aftas.DTO.CompetitionDTO;
 import com.example.aftas.DTO.MemberScoreDTO;
+import com.example.aftas.DTO.ResponseDTO;
 import com.example.aftas.entities.Competition;
 import com.example.aftas.repositories.CompetitionRepository;
 import com.example.aftas.repositories.RankingRepository;
+import com.example.aftas.services.EntityDTOConverterService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,12 +22,14 @@ public class CompetitionServiceImpl implements CompetitionService {
     private CompetitionRepository competitionRepository;
     private final RankingRepository rankingRepository;
     private final ModelMapper modelMapper;
+    private final EntityDTOConverterService converterService;
 
 
-    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankingRepository, ModelMapper modelMapper) {
+    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankingRepository, ModelMapper modelMapper,@Qualifier("entityDTOConverterService") EntityDTOConverterService converterService) {
         this.competitionRepository = competitionRepository;
         this.rankingRepository = rankingRepository;
         this.modelMapper = modelMapper;
+        this.converterService = converterService;
     }
     @Override
     public List<Competition> findAll() {
@@ -37,13 +42,14 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
+    public Competition save(Competition entityDTO) {
+        return null;
+    }
+
+    @Override
     public CompetitionDTO getById(Long id) {
         Competition competition = competitionRepository.getById(id);
-
-        // Map Competition to CompetitionDTO
         CompetitionDTO competitionDTO = modelMapper.map(competition, CompetitionDTO.class);
-
-        // Extract member scores from the associated Ranking entities
         List<MemberScoreDTO> memberScores = rankingRepository.findByCompetitionId(id).stream()
                 .map(ranking -> {
                     MemberScoreDTO scoreDTO = new MemberScoreDTO();
@@ -53,30 +59,27 @@ public class CompetitionServiceImpl implements CompetitionService {
                     return scoreDTO;
                 })
                 .collect(Collectors.toList());
-
-        // Set memberScores in the CompetitionDTO
         competitionDTO.setMemberScores(memberScores);
-
         return competitionDTO;
     }
 
     @Override
-    public Competition save(Competition competition) {
-        // Check if the competition date is in the past
+    public ResponseDTO saveCompetition(Competition competition) {
         if (competition.getDate() != null && competition.getDate().before(new Date())) {
-            throw new IllegalArgumentException("Competition date cannot be in the past");
+//            throw new IllegalArgumentException("Competition date cannot be in the past");
+            return new ResponseDTO("400","Competition date cannot be in the past");
         }
 
-        // Check if there is already a competition on the same date
         if (competition.getDate() != null && competitionRepository.existsByDate(competition.getDate())) {
-            throw new IllegalArgumentException("Another competition already exists on the same date");
+            return new ResponseDTO("400","Another competition already exists on the same date");
+//            throw new IllegalArgumentException("Another competition already exists on the same date");
         }
 
-        // Generate the competition code
         competition.generateCode();
+        Competition competition1 = competitionRepository.save(competition);
 
-        // Save the competition if validation passes
-        return competitionRepository.save(competition);
+
+        return new ResponseDTO("200","add competition successful",converterService.convertToDTO(competition1));
     }
 
     @Override

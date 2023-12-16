@@ -2,6 +2,7 @@ package com.example.aftas.web.rest;
 
 import com.example.aftas.DTO.CompetitionDTO;
 import com.example.aftas.DTO.MemberDTO;
+import com.example.aftas.DTO.ResponseDTO;
 import com.example.aftas.entities.Competition;
 
 import com.example.aftas.entities.Member;
@@ -39,9 +40,9 @@ public class CompetitionRest {
         return new ResponseEntity<>(competitionDTO, HttpStatus.OK);
     }
     @PostMapping("/add")
-    public ResponseEntity<CompetitionDTO> saveCompetition(@RequestBody Competition competition){
-        Competition competition1 = competitionService.save(competition);
-        CompetitionDTO competitionDTO = converterService.convertToDTO(competition1);
-        return new ResponseEntity<>(competitionDTO, HttpStatus.OK);
+    public ResponseEntity<ResponseDTO> saveCompetition(@RequestBody Competition competition){
+        ResponseDTO competition1 = competitionService.saveCompetition(competition);
+
+        return new ResponseEntity<>(competition1, HttpStatus.OK);
     }
 }

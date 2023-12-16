@@ -3,6 +3,7 @@ package com.example.aftas.web.rest;
 
 import com.example.aftas.DTO.CompetitionDTO;
 import com.example.aftas.DTO.RankingDTO;
+import com.example.aftas.DTO.ResponseDTO;
 import com.example.aftas.entities.Competition;
 import com.example.aftas.entities.Ranking;
 import com.example.aftas.services.EntityDTOConverterService;
@@ -28,18 +29,17 @@ public class RegisterRest {
         this.converterService = converterService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<RankingDTO> saveCompetition(@RequestBody Map<String, Integer> requestBody) {
-        Integer rank = requestBody.get("rank");
 
+    @PostMapping("/add")
+    public ResponseEntity<ResponseDTO> saveCompetition(@RequestBody Map<String, Integer> requestBody) {
         Long memberId = Long.valueOf(requestBody.get("memberId"));
         Long compId = Long.valueOf(requestBody.get("compId"));
         Ranking ranking = new Ranking();
-        ranking.setRank(rank);
+        ranking.setRank(999);
         ranking.setScore(0);
-        Ranking savedRanking = registerCompetitionService.saveRegestration(ranking, memberId, compId);
-            RankingDTO rankingDTO = converterService.convertToDTO(savedRanking);
-            return new ResponseEntity<>(rankingDTO, HttpStatus.OK);
+        ResponseDTO savedRanking = registerCompetitionService.saveRegestration(ranking, memberId, compId);
+//            RankingDTO rankingDTO = converterService.convertToDTO(savedRanking);
+            return new ResponseEntity<>(savedRanking, HttpStatus.OK);
     }
 }
 

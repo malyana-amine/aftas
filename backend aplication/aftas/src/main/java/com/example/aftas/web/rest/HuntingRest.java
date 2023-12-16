@@ -2,6 +2,7 @@ package com.example.aftas.web.rest;
 
 import com.example.aftas.DTO.HuntingDTO;
 import com.example.aftas.DTO.RankingDTO;
+import com.example.aftas.DTO.ResponseDTO;
 import com.example.aftas.entities.Hunting;
 import com.example.aftas.entities.Member;
 import com.example.aftas.entities.Ranking;
@@ -30,16 +31,14 @@ public class HuntingRest {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<HuntingDTO> saveHunting(@RequestBody Map<String, Integer> requestBody) {
+    public ResponseEntity<ResponseDTO> saveHunting(@RequestBody Map<String, Integer> requestBody) {
 
         Long fishId = Long.valueOf(requestBody.get("fishId"));
         Long memberId = Long.valueOf(requestBody.get("memberId"));
         Long compId = Long.valueOf(requestBody.get("compId"));
         Double actuelWeightOfHuntingFish = Double.valueOf(requestBody.get("actuelWeightOfHuntingFish"));
-
-        Hunting hunting = huntingService.saveHunting(memberId,compId,fishId,actuelWeightOfHuntingFish);
-        HuntingDTO huntingDTO = converterService.convertToDTO(hunting);
-        return new ResponseEntity<>(huntingDTO, HttpStatus.OK);
+        ResponseDTO hunting = huntingService.saveHunting(memberId,compId,fishId,actuelWeightOfHuntingFish);
+        return new ResponseEntity<>(hunting, HttpStatus.OK);
     }
 }
 
