@@ -31,12 +31,12 @@ public class RegisterRest {
     @PostMapping("/add")
     public ResponseEntity<RankingDTO> saveCompetition(@RequestBody Map<String, Integer> requestBody) {
         Integer rank = requestBody.get("rank");
-        Integer score = requestBody.get("score");
+
         Long memberId = Long.valueOf(requestBody.get("memberId"));
         Long compId = Long.valueOf(requestBody.get("compId"));
         Ranking ranking = new Ranking();
         ranking.setRank(rank);
-        ranking.setScore(score);
+        ranking.setScore(0);
         Ranking savedRanking = registerCompetitionService.saveRegestration(ranking, memberId, compId);
             RankingDTO rankingDTO = converterService.convertToDTO(savedRanking);
             return new ResponseEntity<>(rankingDTO, HttpStatus.OK);

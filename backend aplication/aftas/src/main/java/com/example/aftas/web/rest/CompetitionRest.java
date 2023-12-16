@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/competition")
 public class CompetitionRest {
-
     private CompetitionService competitionService;
     private EntityDTOConverterService converterService;
 
@@ -28,9 +27,15 @@ public class CompetitionRest {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<CompetitionDTO>> getAllMembers() {
+    public ResponseEntity<List<CompetitionDTO>> getAllCompetition() {
         List<Competition> competitions = competitionService.findAll();
         List<CompetitionDTO> competitionDTO = converterService.convertToDTO1(competitions);
+        return new ResponseEntity<>(competitionDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CompetitionDTO> getCompetitionById(@PathVariable Long id) {
+        CompetitionDTO competitionDTO = competitionService.getById(id);
         return new ResponseEntity<>(competitionDTO, HttpStatus.OK);
     }
     @PostMapping("/add")

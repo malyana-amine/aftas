@@ -1,9 +1,6 @@
 package com.example.aftas.services.Hunting;
 
-import com.example.aftas.entities.Competition;
-import com.example.aftas.entities.Fish;
-import com.example.aftas.entities.Hunting;
-import com.example.aftas.entities.Member;
+import com.example.aftas.entities.*;
 import com.example.aftas.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Component;
@@ -16,12 +13,13 @@ public class HuntingServiceImpl implements HuntingService {
     private MemberRepository memberRepository;
     private CompetitionRepository competitionRepository;
     private HuntingRepository huntingRepository;
-    public HuntingServiceImpl(HuntingRepository huntingRepository, FishRepository fishRepository ,MemberRepository memberRepository,CompetitionRepository competitionRepository) {
-
+    private final RankingRepository rankingRepository;
+    public HuntingServiceImpl(HuntingRepository huntingRepository, FishRepository fishRepository , MemberRepository memberRepository, CompetitionRepository competitionRepository, RankingRepository rankingRepository) {
         this.huntingRepository = huntingRepository;
         this.fishRepository = fishRepository;
         this.memberRepository = memberRepository;
         this.competitionRepository = competitionRepository;
+        this.rankingRepository = rankingRepository;
     }
     @Override
     public List<Hunting> findAll() {
@@ -50,7 +48,11 @@ public class HuntingServiceImpl implements HuntingService {
             }
 
             Optional<Hunting> existingHunt = huntingRepository.findByMemberAndFish(member.get(), fishEntity);
+            Ranking existingRegistration = rankingRepository.findByMemberAndCompetition(member.get(), competition.get());
 
+            if( existingRegistration == null ){
+                throw new IllegalArgumentException("no member in this competition");
+            }else
             if (existingHunt.isPresent()) {
                 Hunting hunting = existingHunt.get();
                 int currentCount = hunting.getNumberOfFish();

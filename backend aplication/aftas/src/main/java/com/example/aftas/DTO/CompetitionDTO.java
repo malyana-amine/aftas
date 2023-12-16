@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 
 @Getter
@@ -23,4 +24,5 @@ public class CompetitionDTO {
     private Integer numberOfParticipant;
     private String location;
     private Double amount;
+    private List<MemberScoreDTO> memberScores;
 }

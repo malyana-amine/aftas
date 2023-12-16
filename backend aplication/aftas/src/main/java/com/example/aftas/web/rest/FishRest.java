@@ -32,9 +32,7 @@ public class FishRest {
         String name = requestBody.getName();
         Integer av = requestBody.getAv();
         Long level = requestBody.getLevel();
-
         Fish fish = fishService.saveFish(name, av.longValue(), level);
-
         FishDTO fishDTO = converterService.convertToDTO(fish);
         return new ResponseEntity<>(fishDTO, HttpStatus.OK);
     }
