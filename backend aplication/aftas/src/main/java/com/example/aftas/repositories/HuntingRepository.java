@@ -15,4 +15,6 @@ public interface HuntingRepository  extends JpaRepository<Hunting, Long> {
     Optional<Hunting> findByMemberAndFish(Member member, Fish fish);
 
     List<Hunting> findByMemberAndCompetition(Member member, Competition competition);
+    List<Hunting> findByCompetitionAndMember(Competition competition, Member member);
+
 }

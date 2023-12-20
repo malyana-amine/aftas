@@ -21,7 +21,7 @@ public class FishServiceImpl implements FishService {
     }
     @Override
     public List<Fish> findAll() {
-        return null;
+        return fishRepository.findAll();
     }
 
     @Override

@@ -26,6 +26,12 @@ public class EntityDTOConverterServiceImp implements EntityDTOConverterService {
                 .collect(Collectors.toList());
     }
     @Override
+    public List<FishDTO> convertTofishDTO(List<Fish> fish) {
+        return fish.stream()
+                .map(fishes -> modelMapper.map(fishes, FishDTO.class))
+                .collect(Collectors.toList());
+    }
+    @Override
     public List<CompetitionDTO> convertToDTO1(List<Competition> competitions){
         return competitions.stream()
                 .map(competition -> modelMapper.map(competition, CompetitionDTO.class))

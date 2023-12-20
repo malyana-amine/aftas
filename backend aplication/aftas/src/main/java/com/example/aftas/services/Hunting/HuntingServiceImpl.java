@@ -49,7 +49,6 @@ public class HuntingServiceImpl implements HuntingService {
         if(member.isEmpty()||competition.isEmpty()||fish.isEmpty()){
             return new ResponseDTO("400","fish or member or competition not found");
         }
-
         if (fish.isPresent()) {
             Fish fishEntity = fish.get();
             if (actuelWeightOfHuntingFish < fishEntity.getAverageWeight()) {
@@ -57,65 +56,35 @@ public class HuntingServiceImpl implements HuntingService {
             }
             Optional<Hunting> existingHunt = huntingRepository.findByMemberAndFish(member.get(), fishEntity);
             Ranking existingRegistration = rankingRepository.findByMemberAndCompetition(member.get(), competition.get());
-
+            Hunting hunting = new Hunting();
             if (existingRegistration == null) {
-//                throw new IllegalArgumentException();
                 return new ResponseDTO("400","No member in this competition");
             } else if (existingHunt.isPresent()) {
-                Hunting hunting = existingHunt.get();
-                int currentCount = hunting.getNumberOfFish();
-                hunting.setNumberOfFish(currentCount + 1);
-                updateScore(member.get(), competition.get());
-                Hunting hunting1 = huntingRepository.save(hunting);
-                updateRanks(competition.get());
-                return new ResponseDTO("200","hunting saved",converterService.convertToDTO(hunting1));
+                int currentCount = existingHunt.get().getNumberOfFish();
+                existingHunt.get().setNumberOfFish(currentCount + 1);
             } else {
-                Hunting hunting = new Hunting();
                 hunting.setCompetition(competition.get());
                 hunting.setFish(fishEntity);
                 hunting.setMember(member.get());
                 hunting.setNumberOfFish(1);
-                updateScore(member.get(), competition.get());
-                Hunting hunting1 = huntingRepository.save(hunting);
-
-                updateRanks(competition.get());
-
-                return new ResponseDTO("200","hunting saved",converterService.convertToDTO(hunting1));
-//                return huntingRepository.save(hunting);
             }
+            Hunting hunting1 = huntingRepository.save(hunting);
+            existingRegistration.setScore(existingRegistration.getScore()+fishEntity.getLevel().getPoint());
+            updateRanks(competition.get());
+            return new ResponseDTO("200","hunting saved",converterService.convertToDTO(hunting1));
         } else {
-            // Handle the case when the fish entity is not present
             return new ResponseDTO("400","fish not exist");
         }
-    }
-
-    private void updateScore(Member member, Competition competition) {
-        List<Hunting> memberHuntings = huntingRepository.findByMemberAndCompetition(member, competition);
-        int totalScore = 0;
-
-        for (Hunting hunting : memberHuntings) {
-            Fish fish = hunting.getFish();
-            Level level = fish.getLevel();
-            totalScore += hunting.getNumberOfFish() * level.getPoint();
-        }
-
-        Ranking ranking = rankingRepository.findByMemberAndCompetition(member, competition);
-        ranking.setScore(totalScore);
-        rankingRepository.save(ranking);
     }
 
     private void updateRanks(Competition competition) {
         List<Ranking> rankings = rankingRepository.findByCompetitionOrderByScoreDesc(competition);
         int rank = 1;
-
         for (Ranking ranking : rankings) {
             ranking.setRank(rank++);
             rankingRepository.save(ranking);
         }
     }
-
-
-
 
     @Override
     public Hunting update(Hunting entityDTO) {

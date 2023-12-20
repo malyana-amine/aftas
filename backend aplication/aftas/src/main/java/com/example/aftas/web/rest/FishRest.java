@@ -11,11 +11,9 @@ import com.example.aftas.services.Hunting.HuntingService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,6 +24,12 @@ public class FishRest {
     public FishRest(FishService fishService, @Qualifier("entityDTOConverterService") EntityDTOConverterService converterService) {
         this.fishService = fishService;
         this.converterService = converterService;
+    }
+    @GetMapping("/getall")
+    public ResponseEntity<List<FishDTO>> getAllFish() {
+        List<Fish> fish = fishService.findAll();
+        List<FishDTO> fishDTOS = converterService.convertTofishDTO(fish);
+        return new ResponseEntity<>(fishDTOS, HttpStatus.OK);
     }
     @PostMapping("/add")
     public ResponseEntity<FishDTO> saveMember(@RequestBody FishRequest requestBody) {

@@ -8,7 +8,6 @@ import lombok.*;
 @ToString
 @Builder
 @NoArgsConstructor
-//@RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO {
     private String status;

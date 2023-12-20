@@ -12,6 +12,9 @@ import java.util.List;
 public interface EntityDTOConverterService {
     List<MemberDTO> convertToDTO(List<Member> member);
 
+
+    List<FishDTO> convertTofishDTO(List<Fish> fish);
+
     List<CompetitionDTO> convertToDTO1(List<Competition> competitions);
 
     public MemberDTO convertToDTO(Member member);

@@ -11,9 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -50,6 +48,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     public CompetitionDTO getById(Long id) {
         Competition competition = competitionRepository.getById(id);
         CompetitionDTO competitionDTO = modelMapper.map(competition, CompetitionDTO.class);
+
         List<MemberScoreDTO> memberScores = rankingRepository.findByCompetitionId(id).stream()
                 .map(ranking -> {
                     MemberScoreDTO scoreDTO = new MemberScoreDTO();
@@ -59,6 +58,9 @@ public class CompetitionServiceImpl implements CompetitionService {
                     return scoreDTO;
                 })
                 .collect(Collectors.toList());
+
+        Collections.sort(memberScores, Comparator.comparing(MemberScoreDTO::getScore).reversed());
+
         competitionDTO.setMemberScores(memberScores);
         return competitionDTO;
     }
@@ -66,7 +68,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     @Override
     public ResponseDTO saveCompetition(Competition competition) {
         if (competition.getDate() != null && competition.getDate().before(new Date())) {
-//            throw new IllegalArgumentException("Competition date cannot be in the past");
+//
             return new ResponseDTO("400","Competition date cannot be in the past");
         }
 
