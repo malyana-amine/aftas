@@ -3,6 +3,8 @@ package com.example.aftas.services;
 
 import com.example.aftas.DTO.*;
 import com.example.aftas.entities.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,8 @@ public interface EntityDTOConverterService {
     List<FishDTO> convertTofishDTO(List<Fish> fish);
 
     List<CompetitionDTO> convertToDTO1(List<Competition> competitions);
+
+    Page<CompetitionDTO> convertToDTO2(Page<Competition> competitions, Pageable pageable);
 
     public MemberDTO convertToDTO(Member member);
 

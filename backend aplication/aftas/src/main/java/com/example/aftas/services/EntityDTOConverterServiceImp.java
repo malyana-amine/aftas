@@ -5,6 +5,9 @@ import com.example.aftas.DTO.*;
 import com.example.aftas.entities.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -36,6 +39,13 @@ public class EntityDTOConverterServiceImp implements EntityDTOConverterService {
         return competitions.stream()
                 .map(competition -> modelMapper.map(competition, CompetitionDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<CompetitionDTO> convertToDTO2(Page<Competition> competitions, Pageable pe){
+        return new PageImpl<>(competitions.stream()
+                .map(competition -> modelMapper.map(competition, CompetitionDTO.class))
+                .collect(Collectors.toList()),pe,competitions.getTotalElements());
     }
     public MemberDTO convertToDTO(Member member) {
         return modelMapper.map(member, MemberDTO.class);

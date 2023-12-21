@@ -24,4 +24,8 @@ public class ResponseDTO {
         this.status = status;
         this.message = message;
     }
+
+    public String getCode() {
+        return status;
+    }
 }

@@ -1,15 +1,15 @@
 package com.example.aftas.web.rest;
 
 import com.example.aftas.DTO.CompetitionDTO;
-import com.example.aftas.DTO.MemberDTO;
 import com.example.aftas.DTO.ResponseDTO;
 import com.example.aftas.entities.Competition;
 
-import com.example.aftas.entities.Member;
 import com.example.aftas.services.Competition.CompetitionService;
 import com.example.aftas.services.EntityDTOConverterService;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +44,10 @@ public class CompetitionRest {
         ResponseDTO competition1 = competitionService.saveCompetition(competition);
 
         return new ResponseEntity<>(competition1, HttpStatus.OK);
+    }
+    @GetMapping("/paged")
+    public ResponseEntity<Page<CompetitionDTO>> getAllCompetitionsPaged(Pageable pageable) {
+        Page<CompetitionDTO> competitions = competitionService.findAllCompetitions(pageable);
+        return new ResponseEntity<>(competitions, HttpStatus.OK);
     }
 }

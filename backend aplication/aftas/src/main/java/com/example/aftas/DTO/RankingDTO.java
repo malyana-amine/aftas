@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RankingDTO {
-    private Long  id;
+    private MemberCompetition id;
     private Integer rank;
     private Integer score;
     private Long memberId;

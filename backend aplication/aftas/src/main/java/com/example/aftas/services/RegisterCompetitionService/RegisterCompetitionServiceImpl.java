@@ -4,6 +4,7 @@ import com.example.aftas.DTO.ResponseDTO;
 import com.example.aftas.entities.Competition;
 import com.example.aftas.entities.Member;
 import com.example.aftas.entities.Ranking;
+import com.example.aftas.entities.embadded.MemberCompetition;
 import com.example.aftas.repositories.CompetitionRepository;
 import com.example.aftas.repositories.MemberRepository;
 import com.example.aftas.repositories.RankingRepository;
@@ -48,7 +49,6 @@ public class RegisterCompetitionServiceImpl implements RegisterCompetitionServic
     @Override
     public ResponseDTO saveRegestration(Ranking entityDTO, Long memberId, Long compId) {
         Optional<Member> member = memberRepository.findById(memberId);
-
         Competition competition = competitionRepository.getById(compId);
 
         LocalDateTime now = LocalDateTime.now();
@@ -58,7 +58,6 @@ public class RegisterCompetitionServiceImpl implements RegisterCompetitionServic
 
         long hoursDifference = ChronoUnit.HOURS.between(now, competitionEndTime);
         if (hoursDifference < 24) {
-//            throw new RuntimeException();
             return new ResponseDTO("400","Registration is closed for this competition");
         }
 
@@ -72,7 +71,14 @@ public class RegisterCompetitionServiceImpl implements RegisterCompetitionServic
         }
             entityDTO.setMember(member.get());
             entityDTO.setCompetition(competition);
+
+            entityDTO.setRank(999);
+            entityDTO.setScore(0);
+            entityDTO.setId(new MemberCompetition().builder()
+                    .competitionId(competition.getId()).memberId(member.get().getId()).build());
+
             Ranking ranking = rankingRepository.save(entityDTO);
+
             return new ResponseDTO("200","register Member successfully",converterService.convertToDTO(ranking));
         }
     }

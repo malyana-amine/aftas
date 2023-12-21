@@ -9,6 +9,8 @@ import com.example.aftas.repositories.RankingRepository;
 import com.example.aftas.services.EntityDTOConverterService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -82,6 +84,12 @@ public class CompetitionServiceImpl implements CompetitionService {
 
 
         return new ResponseDTO("200","add competition successful",converterService.convertToDTO(competition1));
+    }
+
+    @Override
+    public Page<CompetitionDTO> findAllCompetitions(Pageable pageable) {
+        Page<Competition> competition = competitionRepository.findAll(pageable);
+        return converterService.convertToDTO2(competition,pageable);
     }
 
     @Override

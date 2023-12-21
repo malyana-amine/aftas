@@ -35,8 +35,6 @@ public class RegisterRest {
         Long memberId = Long.valueOf(requestBody.get("memberId"));
         Long compId = Long.valueOf(requestBody.get("competitionId"));
         Ranking ranking = new Ranking();
-        ranking.setRank(999);
-        ranking.setScore(0);
         ResponseDTO savedRanking = registerCompetitionService.saveRegestration(ranking, memberId, compId);
             return new ResponseEntity<>(savedRanking, HttpStatus.OK);
     }
