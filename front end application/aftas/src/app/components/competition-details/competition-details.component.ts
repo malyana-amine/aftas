@@ -16,11 +16,8 @@ export class CompetitionDetailsComponent {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get("id"));
     this.competitionService.getCompetitionById(id).subscribe(
-      result => this.competition = result,
-      
-      err => console.error(err)
+      result => this.competition = result
     )
-    // console.log(result.data)
   }
 
 }

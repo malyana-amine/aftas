@@ -24,7 +24,7 @@ export class RegisterCompetitionComponent implements OnInit {
       this.competitionData = result;
     });
   }
-dateplus24:any = this.date.getTime();
+// dateplus24:any = this.date.getTime();
 
   compareDates(x :any):boolean{
     if(new Date(x).getTime()-this.date.getTime()>(24*3600*1000)){

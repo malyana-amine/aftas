@@ -1,0 +1,32 @@
+body {
+    padding-top: 50px;
+  }
+
+  .podium {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    text-align: center;
+  }
+
+  .podium-item {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+  }
+
+  .first-place {
+    background-color: #28a745;
+    color: #fff;
+  }
+
+  .second-place {
+    background-color: #17a2b8;
+    color: #fff;
+  }
+
+  .third-place {
+    background-color: #ffc107;
+    color: #fff;
+  }

@@ -13,13 +13,27 @@
                 <p class="card-text">Number of Participants: {{ competition?.numberOfParticipant }}</p>
                 <p class="card-text">Location: {{ competition?.location }}</p>
                 <p class="card-text">Amount: ${{ competition?.amount }}</p>
-            
-                <!-- Add update button -->
-                <button class="btn btn-primary" >Update</button>
-            
-                <!-- Add delete button -->
-                <button class="btn btn-danger ">Delete</button>
+             
             </div>
+            <div *ngIf="competition?.memberScores[0]?.score != 0" class="container">
+                <div class="podium">
+                  <div class="podium-item first-place">
+                    <h2>1st Place</h2>
+                    <p>{{ competition?.memberScores[0]?.memberName }} - {{ competition?.memberScores[0]?.score }}</p>
+                  </div>
+                  <div class="podium-item second-place">
+                    <h2>2nd Place</h2>
+                    <p>{{ competition?.memberScores[1]?.memberName }} - {{ competition?.memberScores[1]?.score }}</p>
+                  </div>
+                  <div class="podium-item third-place">
+                    <h2>3rd Place</h2>
+                    <p>{{ competition?.memberScores[2]?.memberName }} - {{ competition?.memberScores[2]?.score }}</p>
+                  </div>
+                </div>
+              </div>
+              
+              
+            
             
         </div>
     </div>

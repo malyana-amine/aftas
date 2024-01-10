@@ -1,0 +1,91 @@
+<div class="content">
+    <div class="container-fluid pt-4 px-4">
+        <div class="container"> 
+            </div>
+      <div class="row g-4">
+          <div class="col-12">
+              <div class="bg-secondary rounded h-100 p-4">
+                  <h6 class="mb-4">competitions</h6>
+                  <div class="table-responsive">
+                    
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th scope="col">Code</th>
+                                  <th scope="col">Location</th>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Start time</th>
+                                  <th scope="col">End time</th>
+                                  <th scope="col">amount</th>
+                                  <th scope="col">Number of participant</th>
+                                  <th scope="col">status</th>
+                                  <th scope="col">Add hunting</th>
+                              </tr>
+                          </thead>
+                          <tbody *ngFor="let competitions of competitionData">
+                              <tr>
+                                  <th scope="row"> <a [routerLink]="['/competition', competitions?.id]">{{ competitions?.code }}</a> </th>
+                                  <td>{{ competitions?.location }}</td>
+                                  <td>{{ competitions?.date |date:'yyyy-MM-dd'}} </td>
+                                  <td>{{ competitions?.startTime }}</td>
+                                  <td>{{ competitions?.endTime }}</td>
+                                  <td>{{ competitions?.amount }}</td>
+                                  <td>{{ competitions?.numberOfParticipant }}</td>
+                                  <td [ngSwitch]="compareDates(competitions?.date)">
+                                    <div *ngSwitchCase="0">actuel</div>
+                                    <div *ngSwitchCase="1">pending</div>
+                                    <div *ngSwitchCase="2">expired</div>
+                                  </td>
+                                  
+                                  <!-- <td>status</td> -->
+                                  <td><button (click)="getCompetition(competitions?.id)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" [disabled]="compareDates(competitions?.date) != 0">add</button></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div> 
+        
+      </div>
+    
+    </div>
+
+    <!-- competition-of-today.component.html -->
+    <form #modalForm="ngForm" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" (ngSubmit)="register(modalForm)">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-dark" id="exampleModalLabel" *ngIf="competition">{{ competition.code }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+      
+            <div class="modal-body">
+              <select *ngIf="competition" [(ngModel)]="hunting.memberId" name="memberId" class="form-select" aria-label="Default select example" required>
+                <option disabled selected>Select a member</option>
+                <option *ngFor="let member of competition?.memberScores" [value]="member.memberId">{{ member.memberName }}</option>
+              </select>
+              
+              <select *ngIf="fishData && competition" [(ngModel)]="hunting.fishId" name="fishId" class="form-select" aria-label="Default select example" required>
+                <option disabled selected>Select a fish</option>
+                <option *ngFor="let fish of fishData" [value]="fish.id">{{ fish.name }}</option>
+              </select>
+      
+              <div *ngIf="competition">
+                <h5>Weight of fish</h5>
+                <input [(ngModel)]="hunting.compId" type="hidden" [value]="competition.id">
+                <input [(ngModel)]="hunting.actuelWeightOfHuntingFish" name="fishWeight" type="number" class="form-control" placeholder="Weight of fish" required>
+              </div>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+  

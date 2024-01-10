@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-xl-12 mb-4">
+        <!-- <button class="btn btn-primary btn-block">Add new member</button> -->
+      </div>
+      <div class="col-sm-12 col-xl-12">
+        <form #userForm="ngForm" class="bg-secondary rounded p-4">
+          <h6 class="mb-4 text-white">Member Form</h6>
+          <div class="mb-3">
+            <label for="location" class="form-label text-white">Name</label>
+            <input type="text" class="form-control" id="location" placeholder="Enter your name" name="name" required [(ngModel)]="member.name">
+          </div>
+  
+          <div class="mb-3">
+            <label for="location" class="form-label text-white">Family Name</label>
+            <input type="text" class="form-control" id="location" placeholder="Enter your family name" name="familyName" required [(ngModel)]="member.familyName">
+          </div>
+  
+          <div class="mb-3">
+            <label for="location" class="form-label text-white">Nationality</label>
+            <input type="text" class="form-control" id="location" placeholder="Enter your nationality" name="nationality" required [(ngModel)]="member.nationality">
+          </div>
+  
+          <div class="mb-3">
+            <label for="identityType" class="form-label text-white">Identity Type</label>
+            <select name="identityType" id="identityType" class="form-select" [(ngModel)]="member.identityDocumentType">
+              <option value="IDENTITY_CARD">Identity Card</option>
+              <option value="PASSPORT">Passport</option>
+              <option value="RESIDENCE_CARD">Residence Card</option>
+            </select>
+            <input type="text" class="form-control mt-2" id="location" placeholder="Enter your identity information" name="identityInfo" required [(ngModel)]="member.identityNumber">
+          </div>
+  
+          <button type="button" class="btn btn-primary" (click)="register(userForm)">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

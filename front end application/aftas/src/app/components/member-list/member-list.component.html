@@ -1,0 +1,37 @@
+<div class="content">
+    <div class="container-fluid pt-4 px-4">
+        <div class="container"> 
+            </div>
+      <div class="row g-4">
+          <div class="col-12">
+              <div class="bg-secondary rounded h-100 p-4">
+                  <h6 class="mb-4">Responsive Table</h6>
+                  <div class="table-responsive">
+                    
+                      <table class="table">
+                          <thead>
+                              <tr>
+                               
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Family name</th>
+                                  <th scope="col">Nationality</th>
+                                  <th scope="col">Identity</th>
+                              </tr>
+                          </thead>
+                          <tbody *ngFor="let member of memberData">
+                              <tr>
+                                  <td>{{ member?.name }}</td>
+                                  <td>{{ member?.familyName}} </td>
+                                  <td>{{ member?.nationality }}</td>
+                                  <td>{{ member?.identityDocumentType }} : {{ member?.identityNumber }}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+    
+    <app-add-member></app-add-member>
+    </div>
+</div>

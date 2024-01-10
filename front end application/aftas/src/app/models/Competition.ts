@@ -7,4 +7,5 @@ export class Competition {
     numberOfParticipant!: number;
     location!: string;
     amount!: number;
+    memberScores!: [];
 }

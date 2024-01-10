@@ -33,6 +33,11 @@
                           </tbody>
                       </table>
                   </div>
+                  <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        (page)="onPageChange($event)"
+    ></mat-paginator>
               </div>
           </div>
       </div>
